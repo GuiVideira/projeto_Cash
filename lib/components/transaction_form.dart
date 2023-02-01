@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatefulWidget {
-  const TransactionForm({super.key});
+class TransactionForm extends StatelessWidget {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController valueController = TextEditingController();
+  
+  final void Function(String, double) onSubmit;
 
-  @override
-  State<TransactionForm> createState() => _TransactionFormState();
-}
-
-class _TransactionFormState extends State<TransactionForm> {
- TextEditingController titleController = TextEditingController();
-
- TextEditingController valueController = TextEditingController();
+  TransactionForm(this.onSubmit, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +18,13 @@ class _TransactionFormState extends State<TransactionForm> {
                     children:  <Widget>[
                        TextField(
                         controller: titleController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Título',
                         ),
                       ),
                        TextField(
                         controller: valueController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Valor(R\$)',
                         ),
                       ),
@@ -39,8 +35,9 @@ class _TransactionFormState extends State<TransactionForm> {
                           style: TextButton.styleFrom(foregroundColor: Colors.orange),
                           child: const Text('Nova Transação'),
                           onPressed: () {
-                            print(titleController.text);
-                            print(valueController.text);
+                            final title = titleController.text;
+                            final value = double.tryParse(valueController.text) ?? 0.0;
+                            onSubmit(title, value);
                           },
                           ),
                        ],
