@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController valueController = TextEditingController();
-  
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
 
-  TransactionForm(this.onSubmit, {super.key});
+  const TransactionForm(this.onSubmit, {super.key});
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  TextEditingController titleController = TextEditingController();
+
+  TextEditingController valueController = TextEditingController();
 
   _submitForm () {
     final title = titleController.text;
@@ -16,7 +22,7 @@ class TransactionForm extends StatelessWidget {
       return;
     }
     
-    onSubmit(title, value);
+    widget.onSubmit(title, value);
                           
   }
 
@@ -30,7 +36,6 @@ class TransactionForm extends StatelessWidget {
                     children:  <Widget>[
                        TextField(
                         controller: titleController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         onSubmitted: (_) => _submitForm(),
                         decoration: const InputDecoration(
                           labelText: 'Título',
@@ -38,6 +43,7 @@ class TransactionForm extends StatelessWidget {
                       ),
                        TextField(
                         controller: valueController,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         decoration: const InputDecoration(
                           labelText: 'Valor(R\$)',
                         ),
@@ -46,9 +52,9 @@ class TransactionForm extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                        children: [
                          TextButton(
-                          child: const Text('Nova Transação'),
                           style: TextButton.styleFrom(foregroundColor: Colors.orange),
                           onPressed: _submitForm,
+                          child: const Text('Nova Transação'),
                           ),
                        ],
                      )

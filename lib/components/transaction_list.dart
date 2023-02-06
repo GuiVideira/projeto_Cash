@@ -26,17 +26,17 @@ class TransactionList extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.primary,
                               width: 2,
                             )
                           ), //Estiliazção do Contaiter na parte do preço
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             'R\$${tr.value.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: Colors.orange,//Estilização da fonte 
+                              color: Theme.of(context).colorScheme.primary,//Estilização da fonte 
                             ),
                             ),
                         ),
@@ -46,10 +46,7 @@ class TransactionList extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               tr.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize:16,                //Estilização da fonte
-                              ),
+                              style:Theme.of(context).textTheme.headline6,
                             ),
                             Text(
                               DateFormat('d MMM y').format(tr.date),//data formatada no padrão dia mes ano

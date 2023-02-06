@@ -1,4 +1,3 @@
-import 'package:cash/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '/components/transaction_form.dart';
@@ -13,8 +12,29 @@ class CashApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return  MaterialApp(
+      home: const HomePage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.pink,
+        )
+        .copyWith(
+          secondary: Colors.green,
+        ),//aqui foi posto um esquema de cores, uma cor principal e uma secundária que muda as cores de forma geral e o botão floatingActionButton respectivamente.
+        fontFamily: 'RobotoMono',
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: const TextStyle(
+            fontFamily: 'Lora',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          )
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily:'Lora',fontSize:20, 
+          ),
+        ),
+      ),
     );
   }
 }
@@ -45,7 +65,6 @@ class _HomePageState extends State<HomePage> {
 
   
     _addTransaction(String title, double value) {
-
       final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: title,
@@ -56,6 +75,8 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _transactions.add(newTransaction);
       }); 
+      //Navigator.of serve para fechar o modal(formulario), aplicação stateless
+      Navigator.of(context).pop();
     }
 
   _openTransactionFormModal(BuildContext context){
@@ -71,10 +92,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title:const Text('CashApp'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _openTransactionFormModal(context),
           )
         ],
@@ -83,12 +105,12 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-              const SizedBox(
+               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  color: Colors.amber,
-                  child: Text('Gráfico'),
+                  color: Theme.of(context).colorScheme.primary,
                   elevation: 5,
+                  child: const Text('Gráfico'),
                   ),
               ),
               TransactionList(_transactions),
@@ -96,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => _openTransactionFormModal(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
