@@ -10,7 +10,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height:395,
+      height:MediaQuery.of(context).size.height * 0.6,
       child: transactions.isEmpty ? Column(  //se a transactions tiver vazia, a imagem aparecerá
         children: <Widget>[
           const SizedBox(height: 20),

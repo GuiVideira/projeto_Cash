@@ -13,6 +13,7 @@ class CashApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return  MaterialApp(
       home: const HomePage(),
       theme: ThemeData(
@@ -20,7 +21,7 @@ class CashApp extends StatelessWidget {
           primarySwatch: Colors.green,
         )
         .copyWith(
-          secondary: Colors.purple,
+          secondary: Colors.black,
         ),//aqui foi posto um esquema de cores, uma cor principal e uma secundária que muda as cores de forma geral e o botão floatingActionButton respectivamente.
         fontFamily: 'RobotoMono',
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -110,23 +111,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final appBar = AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title:const Text('CashApp'),
+        title: Text(
+          'CashApp',
+          style: TextStyle(
+            fontSize:  20 * MediaQuery.of(context).textScaleFactor,
+          ),
+          ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () => _openTransactionFormModal(context),
           )
         ],
-      ),
+      );
+    final availableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-               Chart(_recentTransactions),
-              TransactionList(_transactions, _removeTransaction),
+               Container(
+                height: availableHeight * 0.3,
+                child: Chart(_recentTransactions)
+               ),
+              Container(
+                height: availableHeight * 0.7,
+                child: TransactionList(_transactions, _removeTransaction)
+                ),
           ]
         ),
       ),
