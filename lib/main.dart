@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:io';
 import '/components/transaction_form.dart';
 import '/components/transaction_list.dart';
 import '/components/chart.dart';
@@ -98,7 +100,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+
 
 
     final appBar = AppBar(
@@ -121,11 +125,9 @@ class _HomePageState extends State<HomePage> {
         ],
       );
  
-    final availableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+    final availableHeight = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final bodyPage = SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -145,19 +147,38 @@ class _HomePageState extends State<HomePage> {
               ],
             ),*/
              if (_showChart || !isLandscape)
-            Container(
-              height: availableHeight * (isLandscape ? 0.7 : 0.3),
+            SizedBox(
+              height: availableHeight * (isLandscape ? 0.7 : 0.2),
               child: Chart(_recentTransactions)
-            ),
+            ), 
             if (!_showChart || !isLandscape)
              Container(
-              height: availableHeight * 0.7,
+              height: availableHeight * (isLandscape ? 1 : 0.7),
               child: TransactionList(_transactions, _removeTransaction)
             ),
           ]
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
+      );
+
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text('CashApp'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: actions,
+              ),
+            ),
+            child: bodyPage,
+          )
+    
+    :Scaffold(
+      appBar: appBar,
+      body: bodyPage,
+      floatingActionButton: Platform.isIOS
+      ? Container()
+      : FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => _openTransactionFormModal(context),
       ),
