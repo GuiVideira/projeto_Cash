@@ -151,8 +151,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              if (isLandscape)
-                /*Row(
+              /*if (isLandscape)
+                Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Exibir Texto'),
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             ),*/
                 if (_showChart || !isLandscape)
                   SizedBox(
-                      height: availableHeight * (isLandscape ? 0.7 : 0.2),
+                      height: availableHeight * (isLandscape ? 0.8 : 0.3),
                       child: Chart(_recentTransactions)),
               if (!_showChart || !isLandscape)
                 SizedBox(
