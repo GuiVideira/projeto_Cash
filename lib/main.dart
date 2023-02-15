@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getIconButton(IconData icon, Function() fn) {
-    return Platform.isIOS
+    return Platform.isIOS 
         ? GestureDetector(onTap: fn, child: Icon(icon))
         : IconButton(icon: Icon(icon), onPressed: fn);
   }
@@ -105,8 +105,8 @@ class _HomePageState extends State<HomePage> {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-  final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
-  final chartList = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+  final iconList = Platform.isIOS  ? CupertinoIcons.refresh : Icons.list;
+  final chartList = Platform.isIOS  ? CupertinoIcons.refresh : Icons.show_chart;
 
     final actions = <Widget>[
       if (isLandscape)
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
 
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('CashApp'),
+            middle: const Text('CashApp'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: actions,
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                       height: availableHeight * (isLandscape ? 0.7 : 0.2),
                       child: Chart(_recentTransactions)),
               if (!_showChart || !isLandscape)
-                Container(
+                SizedBox(
                     height: availableHeight * (isLandscape ? 1 : 0.7),
                     child: TransactionList(_transactions, _removeTransaction)),
             ]
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    return Platform.isIOS
+    return Platform.isIOS 
         ? CupertinoPageScaffold(
             navigationBar: appBar as ObstructingPreferredSizeWidget, //parse
             child: bodyPage,
@@ -187,10 +187,10 @@ class _HomePageState extends State<HomePage> {
         : Scaffold(
             appBar: appBar,
             body: bodyPage,
-            floatingActionButton: Platform.isIOS
+            floatingActionButton: Platform.isIOS 
                 ? Container()
                 : FloatingActionButton(
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                     onPressed: () => _openTransactionFormModal(context),
                   ),
             floatingActionButtonLocation:
