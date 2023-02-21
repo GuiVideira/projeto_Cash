@@ -54,6 +54,7 @@ class LoginPage extends StatelessWidget {
               hintText: 'Username',
               obscureText: true,
             ),
+            //parei o video no 8:00 https://www.youtube.com/watch?v=Dh-cTQJgM-Q
         ],
       ),
           )),
