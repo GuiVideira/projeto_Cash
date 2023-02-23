@@ -28,10 +28,10 @@ class MyTextField extends StatelessWidget {
                   ),
                   fillColor: Colors.grey.shade200,
                   filled:true,
-                  hintText: hintText
+                  hintText: hintText,
+                  hintStyle: TextStyle(color: Colors.grey[500]),
                 ),
               ),
             );
   }
 }
-//parei o video no 7:33 https://www.youtube.com/watch?v=Dh-cTQJgM-Q
